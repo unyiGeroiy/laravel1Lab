@@ -2988,6 +2988,15 @@ document.addEventListener('DOMContentLoaded', function () {
       return toast.show();
     });
   }
+  document.querySelectorAll('.needs-validation').forEach(function (form) {
+    form.addEventListener('submit', function (e) {
+      if (!form.checkValidity()) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      form.classList.add('was-validated');
+    });
+  });
   var modalEl = document.getElementById('seasonModal');
   if (!modalEl) return;
   var modal = bootstrap__WEBPACK_IMPORTED_MODULE_1__.Modal.getOrCreateInstance(modalEl);
@@ -2996,23 +3005,21 @@ document.addEventListener('DOMContentLoaded', function () {
   var current = 0;
   var load = /*#__PURE__*/function () {
     var _ref = _asyncToGenerator(/*#__PURE__*/_regenerator().m(function _callee(i) {
-      var response;
+      var response, page, _t;
       return _regenerator().w(function (_context) {
         while (1) switch (_context.n) {
           case 0:
             current = (i + links.length) % links.length;
             _context.n = 1;
-            return fetch(links[current].href, {
-              headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-              }
-            });
+            return fetch(links[current].href);
           case 1:
             response = _context.v;
+            _t = new DOMParser();
             _context.n = 2;
             return response.text();
           case 2:
-            content.innerHTML = _context.v;
+            page = _t.parseFromString.call(_t, _context.v, 'text/html');
+            content.innerHTML = page.querySelector('.modal-content').innerHTML;
           case 3:
             return _context.a(2);
         }

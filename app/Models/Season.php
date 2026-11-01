@@ -26,7 +26,7 @@ class Season extends Model
     protected function premiereDate(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => Carbon::parse($value),
+            get: fn ($value) => $value ? Carbon::parse($value) : null,
             set: fn ($value) => Carbon::parse($value)->format('Y-m-d'),
         );
     }

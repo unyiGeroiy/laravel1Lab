@@ -2,11 +2,6 @@
 
 @section('content')
   <h1 class="main-title">Сезоны сериала Доктор Кто</h1>
-
-  @if (session('success'))
-    <div class="alert alert-success">{{ session('success') }}</div>
-  @endif
-
   <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xxl-5 g-4 justify-content-center">
     @forelse ($seasons as $season)
       <div class="col">

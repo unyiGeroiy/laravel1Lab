@@ -11,15 +11,18 @@
   <header class="header">
     <nav class="navbar navbar-dark">
       <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">
+        <a class="navbar-brand" href="{{ route('seasons.index') }}">
           <img src="{{ asset('storage/images/doctorWhoLogo.png') }}" alt="Доктор Кто" class="logo-img">
         </a>
-        <button id="loadBtn" type="button" class="btn btn-primary">
-          <i class="fa-solid fa-download me-2"></i>Загрузить
-        </button>
+        <div>
+          <a href="{{ route('seasons.create') }}" class="btn btn-outline-light me-2">
+            <i class="fa-solid me-2"></i>Добавить
+          </a>
+        </div>
       </div>
     </nav>
   </header>
+
 
   <main class="main">
     <div class="container">

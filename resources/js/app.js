@@ -11,6 +11,16 @@ document.addEventListener('DOMContentLoaded', () => {
     loadBtn.addEventListener('click', () => toast.show());
   }
 
+  document.querySelectorAll('.needs-validation').forEach(form => {
+  form.addEventListener('submit', (e) => {
+    if (!form.checkValidity()) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    form.classList.add('was-validated');
+  });
+  });
+
   const modalEl = document.getElementById('seasonModal');
   if (!modalEl) return;
 
@@ -21,10 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const load = async (i) => {
     current = (i + links.length) % links.length;
-    const response = await fetch(links[current].href, {
-      headers: { 'X-Requested-With': 'XMLHttpRequest' }
-    });
-    content.innerHTML = await response.text();
+    const response = await fetch(links[current].href);
+    const page = new DOMParser().parseFromString(await response.text(), 'text/html');
+    content.innerHTML = page.querySelector('.modal-content').innerHTML;
   };
 
   links.forEach((link, i) => {
