@@ -1,0 +1,184 @@
+$primary: #c9302c;
+$secondary: #84828f;
+$dark: #1e1f42;
+$light: #e8eef7;
+
+$danger: $primary;
+$card-bg: $secondary;
+$body-bg: #0b132b;
+$body-color: $light;
+
+$navbar-dark-color: $light;
+$navbar-dark-hover-color: $primary;
+
+$modal-content-bg: $dark;
+$modal-content-color: $light;
+$modal-header-border-color: rgba($light, 0.1);
+$modal-footer-border-color: rgba($light, 0.1);
+
+$toast-background-color: $dark;
+$toast-header-background-color: $dark;
+$toast-header-color: $light;
+$toast-color: $light;
+
+$grid-breakpoints: (
+  xs:   0,
+  sm:   576px,
+  md:   768px,
+  lg:   992px,
+  xl:   1200px,
+  xxl:  1400px,
+  xxxl: 1500px
+);
+
+$container-max-widths: (
+  sm:   540px,
+  md:   720px,
+  lg:   960px,
+  xl:   1140px,
+  xxl:  1320px,
+  xxxl: 1440px
+);
+
+@import "~bootstrap/scss/bootstrap";
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+
+body {
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: $dark;
+  padding: 10px 0;
+}
+
+.logo-img {
+  height: 50px;
+  width: auto;
+}
+
+.main {
+  padding: 40px 0;
+  flex-grow: 1;
+}
+
+.main-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 30px;
+
+  @include media-breakpoint-up(md) {
+    font-size: 28px;
+  }
+
+  @include media-breakpoint-up(xl) {
+    font-size: 32px;
+  }
+
+  @include media-breakpoint-up(xxxl) {
+    font-size: 36px;
+  }
+}
+
+.card {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+  }
+
+  &__type {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: bold;
+    background-color: darken($card-bg, 26%);
+  }
+
+  .card-title {
+    font-size: 20px;
+  }
+
+  .card-text {
+    font-size: 14px;
+  }
+}
+
+$card-colors: (
+  darken($card-bg,  6%),
+  darken($card-bg, 12%),
+  darken($card-bg, 18%),
+  darken($card-bg, 24%),
+  darken($card-bg, 30%)
+);
+
+@for $i from 1 through 5 {
+  .card--season-#{$i} {
+    background-color: nth($card-colors, $i);
+  }
+}
+
+.footer {
+  background-color: $dark;
+  padding: 20px 0;
+  margin-top: 40px;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__name {
+    font-weight: bold;
+  }
+
+  &__icons {
+    display: flex;
+    gap: 15px;
+  }
+
+  &__icon {
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    img {
+      width: 30px;
+      height: 30px;
+      object-fit: contain;
+    }
+
+    &--dark img {
+      filter: invert(1);
+    }
+  }
+}
+
+.modal-content {
+  border: 1px solid rgba($primary, 0.4);
+}
+
+.modal-nav-hint {
+  font-size: 12px;
+  color: rgba($body-color, 0.6);
+  margin-right: auto;
+}
+
+
+.icon-loading {
+  font-size: 26px;
+}
