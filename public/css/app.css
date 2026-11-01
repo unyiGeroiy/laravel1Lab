@@ -21963,6 +21963,13 @@ body {
   font-size: 14px;
 }
 
+.season-link {
+  display: block;
+  height: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
 .card--season-1 {
   background-color: rgb(45.7244973939%, 44.9223132291%, 50.1365103003%);
 }

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\SeasonController;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'seasons.index');
+Route::redirect('/', '/seasons');
+Route::resource('seasons', SeasonController::class);

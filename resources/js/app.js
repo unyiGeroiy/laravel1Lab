@@ -1,52 +1,43 @@
 import $ from 'jquery';
 window.$ = window.jQuery = $;
-import { Modal, Toast, Popover } from 'bootstrap';
+
+import { Modal, Toast } from 'bootstrap';
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelectorAll('[data-bs-toggle="popover"]').forEach(el => {
-    new Popover(el, {
-      trigger: 'hover focus',
-      container: el.closest('.modal')
+  const toastEl = document.getElementById('loadToast');
+  const loadBtn = document.getElementById('loadBtn');
+  if (toastEl && loadBtn) {
+    const toast = new Toast(toastEl, { delay: 4000 });
+    loadBtn.addEventListener('click', () => toast.show());
+  }
+
+  const modalEl = document.getElementById('seasonModal');
+  if (!modalEl) return;
+
+  const modal = Modal.getOrCreateInstance(modalEl);
+  const content = modalEl.querySelector('.modal-content');
+  const links = [...document.querySelectorAll('.js-card')];
+  let current = 0;
+
+  const load = async (i) => {
+    current = (i + links.length) % links.length;
+    const response = await fetch(links[current].href, {
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
     });
-  });
-  const toast = new Toast(document.getElementById('loadToast'), { delay: 4000 });
-  document.getElementById('loadBtn').addEventListener('click', () => toast.show());
+    content.innerHTML = await response.text();
+  };
 
-  const cards = document.querySelectorAll('.js-card');
-  const modals = [...document.querySelectorAll('.js-modal')];
-  let busy = false;
-
-  modals.forEach(modal => {
-    modal.addEventListener('show.bs.modal', () => { busy = true; });
-    modal.addEventListener('shown.bs.modal', () => { busy = false; });
-  });
-
-  cards.forEach((card, i) => {
-    card.addEventListener('click', () => {
-      Modal.getOrCreateInstance(modals[i]).show();
+  links.forEach((link, i) => {
+    link.addEventListener('click', async (e) => {
+      e.preventDefault();
+      await load(i);
+      modal.show();
     });
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
-
-    const current = modals.find(m => m.classList.contains('show'));
-    if (!current || busy) return;
-
-    e.preventDefault();
-    busy = true;
-
-    const step = e.key === 'ArrowRight' ? 1 : -1;
-    const next = modals[(modals.indexOf(current) + step + modals.length) % modals.length];
-
-
-    Modal.getOrCreateInstance(current).hide();
-
-
-    current.addEventListener('hidden.bs.modal', () => {
-      Modal.getOrCreateInstance(next).show();
-    }, { once: true });
-
-
+    if (!modalEl.classList.contains('show')) return;
+    if (e.key === 'ArrowRight') load(current + 1);
+    if (e.key === 'ArrowLeft') load(current - 1);
   });
 });
