@@ -25,7 +25,6 @@
     </div>
 
     <div class="modal-footer">
-      <span class="modal-nav-hint">для переключения</span>
       <a href="{{ route('seasons.edit', $season) }}" class="btn btn-outline-light">Редактировать</a>
       <form action="{{ route('seasons.destroy', $season) }}" method="POST" onsubmit="return confirm('Удалить сезон?')">
         @csrf
